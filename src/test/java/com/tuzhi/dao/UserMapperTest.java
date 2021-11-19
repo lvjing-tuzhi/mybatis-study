@@ -26,11 +26,8 @@ public class UserMapperTest {
     public void test() {
         logger.info("进入TestUserList");
         SqlSession sqlSession = MybatisUtils.getSqlSession();
-        UserMapper userDao = sqlSession.getMapper(UserMapper.class);
-        List<User> userList = userDao.getUserList();
-        for (User user : userList) {
-            System.out.println(user);
-        }
+        UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+        userMapper.deleteUserAnnotate(8);
         sqlSession.close();
     }
 
@@ -47,7 +44,7 @@ public class UserMapperTest {
     public void addUser() {
         SqlSession sqlSession = MybatisUtils.getSqlSession();
         UserMapper mapper = sqlSession.getMapper(UserMapper.class);
-        mapper.addUser(new User(4,"three","123"));
+        mapper.addUser(new User(7,"three","123"));
         sqlSession.commit();
         sqlSession.close();
     }

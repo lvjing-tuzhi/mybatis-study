@@ -6,7 +6,11 @@
 
     <groupId>com.tuzhi</groupId>
     <artifactId>MybatisStudy</artifactId>
+    <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>mybatis02</module>
+    </modules>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
@@ -36,7 +40,11 @@
             <artifactId>log4j</artifactId>
             <version>1.2.17</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.10</version>
+        </dependency>
     </dependencies>
 
     <build>

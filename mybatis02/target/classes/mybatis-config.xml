@@ -24,7 +24,7 @@
         </environment>
     </environments>
     <mappers>
-        <mapper resource="com/tuzhi/dao/UserMapper.xml"/>
-<!--        <mapper class="com.tuzhi.dao.UserMapper"/>-->
+        <mapper resource="mapper/StudentMapper.xml"/>
+        <mapper resource="mapper/TeacherMapper.xml"/>
     </mappers>
 </configuration>
