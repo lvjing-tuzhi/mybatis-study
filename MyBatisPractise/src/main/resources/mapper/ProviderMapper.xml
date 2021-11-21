@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tuzhi.dao.ProviderMapper">
+
+    <insert id="add" parameterType="Provider">
+        insert into smbms_provider (proCode,proName,proDesc,proContact,proPhone,proAddress
+        ,proFax,createdBy,creationDate)
+        values (#{proCode},#{proName},#{proDesc},#{proContact},#{proPhone},#{proAddress}
+               ,#{proFax},#{createdBy},#{creationDate});
+    </insert>
+
+    <select id="getProviderList" parameterType="map" resultType="Provider">
+        select * from smbms_provider
+        <where>
+            <if test="proName != null">
+                and proName like concat('%',#{proName},'%')
+            </if>
+            <if test="proCode != null">
+                and proCode = #{proCode}
+            </if>
+        </where>
+    </select>
+
+    <delete id="deleteProviderById">
+        delete
+        from smbms_provider
+        where id = #{id};
+    </delete>
+
+    <select id="getProviderById" resultType="Provider">
+        select * from smbms_provider where id = #{id}
+    </select>
+
+    <update id="modify" parameterType="Provider">
+        update smbms_provider
+        <set>
+            <if test="proCode != null">
+                proCode = #{proCode}
+            </if>
+            <if test="proName != null">
+                proName = #{proName}
+            </if>
+            <if test="proDesc != null">
+                proDesc = #{proDesc}
+            </if>
+            <if test="proContact != null">
+                proContact = #{proContact}
+            </if>
+            <if test="proPhone != null">
+                proPhone = #{proPhone}
+            </if>
+            <if test="proAddress != null">
+                proAddress = #{proAddress}
+            </if>
+            <if test="proFax != null">
+                proFax = #{proFax}
+            </if>
+            <if test="modifyDate != null">
+                modifyDate = #{modifyDate}
+            </if>
+            <if test="modifyBy != null">
+                modifyBy = #{modifyBy}
+            </if>
+        </set>
+        where id = #{id};
+    </update>
+
+</mapper>

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--映射dao层接口-->
+<mapper namespace="com.tuzhi.dao.UserMapper">
+    <cache
+            eviction="FIFO"
+            flushInterval="60000"
+            size="512"
+            readOnly="true"/>
+
+<!--    通过userCode获取User-->
+    <select id="getLoginUser" resultType="User" parameterType="String">
+        select * from smbms_user where  userCode = #{userCode}
+    </select>
+
+<!--    增加用户信息-->
+    <insert id="add" parameterType="User">
+        insert into smbms_user (id,userCode,userName,userPassword,gender,birthday
+        ,phone,address,userRole,createdBy,creationDate)
+        values (#{id},#{userCode},#{userName},#{userPassword},#{gender},#{birthday}
+               ,#{phone},#{address},#{userRole},#{createdBy},#{creationDate});
+    </insert>
+
+<!--    通过条件查询-userList-->
+    <select id="getUserList" parameterType="map" resultType="User">
+        select * from smbms_user
+        <if test="currentPageNo!=null &amp;&amp; pageSize!=null">
+            limit #{currentPageNo},#{pageSize};
+        </if>
+        <where>
+            <if test="userName != null">
+                and userName like concat('%',#{userName},'%')
+            </if>
+
+        </where>
+    </select>
+
+<!--    通过条件查询-用户表记录数-->
+    <select id="getUserCount" parameterType="map" resultType="_int">
+        select count(1) as count from smbms_user u,smbms_role r where u.userRole = r.id
+            <if test="userName != null">
+                and u.userName like concat('%',#{userName},'%')
+            </if>
+            <if test="userRole != null">
+                and userRole = #{userRole}
+            </if>
+    </select>
+
+<!--    通过userId删除user-->
+    <delete id="deleteUserById">
+        delete
+        from smbms_user
+        where id = #{id};
+    </delete>
+
+<!--    通过userId获取user-->
+    <select id="getUserById" resultType="User">
+        select * from smbms_user where id = #{id}
+    </select>
+
+<!--    修改用户信息-->
+    <update id="modify" parameterType="User">
+        update smbms_user
+        <set>
+            <if test="userCode != null">
+                userCode = #{userCoder}
+            </if>
+            <if test="userName != null">
+                userName = #{userName}
+            </if>
+            <if test="userPassword != null">
+                userPassword = #{userPassword}
+            </if>
+            <if test="gender != null">
+                gender = #{gender}
+            </if>
+            <if test="birthday != null">
+                birthday = #{birthday}
+            </if>
+            <if test="phone != null">
+                phone = #{phone}
+            </if>
+            <if test="address != null">
+                address = #{address}
+            </if>
+            <if test="userRole != null">
+                userRole = #{userRole}
+            </if>
+            <if test="modifyBy != null">
+                modifyBy = #{modifyBy}
+            </if>
+            <if test="modifyDate != null">
+                modifyDate = #{modifyDate}
+            </if>
+
+        </set>
+        where id = #{id};
+    </update>
+
+<!--    修改当前用户密码-->
+    <update id="updatePwd" parameterType="com.tuzhi.pojo.User">
+        update smbms_user
+        set userPassword = #{userPassword}
+        where id = #{id};
+    </update>
+</mapper>
